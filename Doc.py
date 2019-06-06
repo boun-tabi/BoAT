@@ -9,20 +9,21 @@ class Doc:
             
         with open(filepath, "r", encoding = "utf-8") as f:
             content = f.read()
-        content = content[content.find("\n")+1:]
+        
         
         self.filepath = filepath
         self.sentences = []
         
         sents = re.split(SENTENCE_SPLIT, content)
         for sentence_id, sentence in enumerate(sents):
+            if not sentence.strip():#if sentence is empty due to last or first lines 
+                continue
             sentence = sents[sentence_id]
-            
             sent_id = "not_found"
             m = re.search(SENT_ID, sentence, flags=re.MULTILINE)
             if m:
                 sent_id = m.group(1)
-            
+
             doc_id = "not_found"
             m = re.search(DOC_ID, sentence, flags=re.MULTILINE)
             if m:
@@ -75,6 +76,14 @@ class Sentence:
             if word.head == "0":
                 return word.address()
         return "Null"
+    
+    def get_raw(self):
+        content = "# sent_id = "+self.sent_id+"\n"
+        content += "# text = "+self.text+"\n"
+        for word in self.words:
+            content += "\t".join(word.get_list())+"\n"
+        content+="\n"
+        return content
 
 
 class Word:

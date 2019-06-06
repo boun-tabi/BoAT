@@ -6,11 +6,16 @@ from PySide2.QtCore import Slot, Qt
 from helper import process_document
 import queue
 from Doc import *
+from validate import get_errors
+import sys
 
 class QDataViewer(QWidget):
     def __init__(self):
         QWidget.__init__(self)
         # Layout Init.
+        self.language = 'ud'
+        if len(sys.argv)>1:
+            self.language = sys.argv[1]
         self.setGeometry(650, 300, 600, 600)
         self.setWindowTitle('Data Viewer')
         self.uploadButton = QPushButton('Load Conll File', self)
@@ -45,6 +50,7 @@ class QDataViewer(QWidget):
             self.sentence_id-=1   
         self.update_table()
         self.update_html()
+        self.check_errors()
 
         self.qTextEdit.setText(str(self.sentence_id))
         self.first_time = False
@@ -56,6 +62,7 @@ class QDataViewer(QWidget):
             self.sentence_id+=1
         self.update_table()
         self.update_html()
+        self.check_errors()
 
         self.qTextEdit.setText(str(self.sentence_id))
         self.first_time = False
@@ -67,6 +74,7 @@ class QDataViewer(QWidget):
             self.sentence_id = int(self.qTextEdit.toPlainText())
             self.update_table()
             self.update_html()
+            self.check_errors()
         except Exception as e:
             print(e)
         
@@ -116,11 +124,14 @@ class QDataViewer(QWidget):
 
         self.connect(self.tableWidget.verticalHeader(), QtCore.SIGNAL("sectionClicked(int)"), self.agg)
 
+        self.errorList = QLabel(self)
+        self.vBoxLayout.addWidget(self.errorList)
         
         
         self.webView = QWebEngineView()
 
         self.update_html()
+        self.check_errors()
         self.vBoxLayout.addWidget(self.webView)
 
         self.webView.loadFinished.connect(self.finito)
@@ -235,7 +246,15 @@ class QDataViewer(QWidget):
             
         self.tableWidget.resizeColumnsToContents()
 
-
+    def check_errors(self):
+        error_list = get_errors(self.sentence.get_raw(), self.sentence.sent_id, self.language)
+        if len(error_list)>0:
+            error_raw_string = 'ERRORS:\n'
+            for error in error_list:
+                error_raw_string+=error+'\n'
+            self.errorList.setText(error_raw_string)
+        else:
+            self.errorList.setText('')
     def update_html(self):
         if not self.load_finished: #If the js function not loaded an image onto app it removes browser
             print("Load error!")
@@ -304,6 +323,7 @@ class QDataViewer(QWidget):
 
         if not self.first_time:
             self.update_html()
+            self.check_errors()
 
 
 
