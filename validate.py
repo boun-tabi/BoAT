@@ -74,32 +74,32 @@ def warn(msg, error_type, lineno=True, nodelineno=0, nodeid=0):
     global curr_fname, curr_line, sentence_line, sentence_id, error_counter, tree_counter, args, error_list
     error_counter[error_type] = error_counter.get(error_type, 0)+1
     if not args.quiet:
-        if args.max_err>0 and error_counter[error_type]==args.max_err:
-            print(('...suppressing further errors regarding ' + error_type), file=sys.stderr)
-        elif args.max_err>0 and error_counter[error_type]>args.max_err:
-            pass #suppressed
+        #if args.max_err>0 and error_counter[error_type]==args.max_err:
+        #    print(('...suppressing further errors regarding ' + error_type), file=sys.stderr)
+        #elif args.max_err>0 and error_counter[error_type]>args.max_err:
+        #    pass #suppressed
+        #else:
+        if len(args.input)>1: #several files, should report which one
+            if curr_fname=="-":
+                fn="(in STDIN) "
+            else:
+                fn="(in "+os.path.basename(curr_fname)+") "
         else:
-            if len(args.input)>1: #several files, should report which one
-                if curr_fname=="-":
-                    fn="(in STDIN) "
-                else:
-                    fn="(in "+os.path.basename(curr_fname)+") "
-            else:
-                fn=""
-            sent = ''
-            node = ''
-            # Global variable (last read sentence id): sentence_id
-            # Originally we used a parameter sid but we probably do not need to override the global value.
-            if sentence_id:
-                sent = ' Sent ' + sentence_id
-            if nodeid:
-                node = ' Node ' + str(nodeid)
-            if nodelineno:
-                error_list.append("[%sLine %d%s%s]: %s" % (fn, nodelineno, sent, node, msg))
-            elif lineno:
-                error_list.append("[%sLine %d%s%s]: %s" % (fn, curr_line, sent, node, msg))
-            else:
-                error_list.append("[%sTree number %d on line %d%s%s]: %s" % (fn, tree_counter, sentence_line, sent, node, msg))
+            fn=""
+        sent = ''
+        node = ''
+        # Global variable (last read sentence id): sentence_id
+        # Originally we used a parameter sid but we probably do not need to override the global value.
+        if sentence_id:
+            sent = ' Sent ' + sentence_id
+        if nodeid:
+            node = ' Node ' + str(nodeid)
+        if nodelineno:
+            error_list.append("[%sLine %d%s%s]: %s" % (fn, nodelineno, sent, node, msg))
+        elif lineno:
+            error_list.append("[%sLine %d%s%s]: %s" % (fn, curr_line, sent, node, msg))
+        else:
+            error_list.append("[%sTree number %d on line %d%s%s]: %s" % (fn, tree_counter, sentence_line, sent, node, msg))
 
 ###### Support functions
 
