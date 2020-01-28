@@ -1,46 +1,78 @@
 # BoAT
 BOUN Annotation Tool for Dependency Parsing
 
-This tool is written in Python3 with PySide2 library. You can run it with:
+This repository contains an implementation of the **BoAT** to annotate the CoNLL-U files (https://universaldependencies.org/format.html) easily for dependency parsing. It also visualizes the parse trees.
+
+## Implementation
+
+### Requirements
+- Python 3.6.x
+- PySide2 5.13.1
+- regex 2019.06.19
+
+### Installation of Python 3.6.x
+To check your python3 version:
+```
+python3 —version
+```
+To install Python 3.6.x:
+Mac OS X -> download from https://www.python.org/downloads/mac-osx/
+Linux -> sudo apt install python3.6
+
+### To work in the Virtual Environment (optional)
+Go to the directory of BoAT-master
+```
+python3 -m venv boat_venv
+source boat_venv/bin/activate
+```
+
+### Installation of the modules
+- Install them one by one:
+```
+pip3 install PySide2==5.13.1
+pip3 install regex==2019.06.19
+```
+
+- Or install using requirements.txt:
+```
+pip3 install -r requirements.txt
+```
+
+### Implementation Notes
+Required resources for validation check(data folder and validate.py) is borrowed from https://github.com/universaldependencies/tools. Some changes are made to validate.py.
+
+## How to run?
+- Go to the directory of BoAT-master
+- Run with:
 ```
 python3 main.py
 ```
-If you use this tool for a specific language, giving the language as an argument will check your sentences through validation code of https://github.com/universaldependencies/tools. For example:
+
+To use this tool for a specific language, giving the language as an argument will check your sentences through validation code of https://github.com/universaldependencies/tools. For example:
 ```
 python3 main.py tr
 ```
 
-Required libraries:
-```
-PySide2
-```
+## How to use?
+Check the user manual.
 
-## Validation Check
-Required resources for validation check(data folder and validate.py) is borrowed from https://github.com/universaldependencies/tools. Some changes are made to validate.py code.
-
-## Screenshots
-
-![](https://live.staticflickr.com/65535/48015158961_238975f2d8.jpg)
-
-Loading page
-<br/><br/><br/>
-
-
-![](https://live.staticflickr.com/65535/48015171563_6c2b4d6ac0_b.jpg)
-
-Main page
-
-# Citation
-
-If you use our data or code for academic work, please cite (Not Final Yet):
-
-```
-@inproceedings{turk2019efforts,
-    Author = {T\"{u}rk, Utku and Atmaca, Furkan and \"{O}zate\c{s}, \c{S}aziye Bet\"{u}l and K\"{o}ksal, Abdullatif and \"{O}zt\"{u}rk, Balk{\i}z and G\"{u}ng\"{o}r, Tunga and \"{O}zg\"{u}r, Arzucan},
-    booktitle = {Proceedings of the 13$^{th}$ Linguistic Annotation Workshop},
-    Title = {{Turkish Treebanking: Unifying and Constructing Efforts}},
-    Pages = {},
-    Year = {2019},
-    Organization = {Association for Computational Linguistcs}
+## Citation
+If you make use of the tool, please cite the following paper:
+@inproceedings{turk-etal-2019-turkish,
+    title = "{T}urkish Treebanking: Unifying and Constructing Efforts",
+    author = {T{\"u}rk, Utku  and
+      Atmaca, Furkan  and
+      {\"O}zate{\c{s}}, {\c{S}}aziye Bet{\"u}l  and
+      K{\"o}ksal, Abdullatif  and
+      Ozturk Basaran, Balkiz  and
+      Gungor, Tunga  and
+      {\"O}zg{\"u}r, Arzucan},
+    booktitle = "Proceedings of the 13th Linguistic Annotation Workshop",
+    month = aug,
+    year = "2019",
+    address = "Florence, Italy",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W19-4019",
+    doi = "10.18653/v1/W19-4019",
+    pages = "166--177",
 }
-```
