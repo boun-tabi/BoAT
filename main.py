@@ -361,9 +361,9 @@ class QDataViewer(QWidget):
 
             for word in self.sentence.words:
                 if word.unitword:
-                    x = int(word.id.split("-")[0])
-                    if x>limit:
-                        word.id = str(x-1)+"-"+str(x)
+                    first_word_id = int(word.id.split("-")[0])
+                    if first_word_id>limit:
+                        word.id = str(first_word_id-1)+"-"+str(first_word_id)
                 else:
                     if int(word.id) > limit:
                         word.id = str(int(word.id)-1)
@@ -381,9 +381,9 @@ class QDataViewer(QWidget):
 
             for word in self.sentence.words:
                 if word.unitword:
-                    x = int(word.id.split("-")[0])
-                    if x>limit:
-                        word.id = str(x+1)+"-"+str(x+2)
+                    first_word_id = int(word.id.split("-")[0])
+                    if first_word_id>limit:
+                        word.id = str(first_word_id+1)+"-"+str(first_word_id+2)
                 else:
                     if int(word.id) > limit:
                         word.id = str(int(word.id)+1)
