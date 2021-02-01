@@ -31,9 +31,16 @@ def process_document(sentence):
     output += '"firstson":"' + (sentence.get_head() if sentence.words else None)+'",'
     output += '"labels":["zone=' '","id='+sentence.sent_id+'"]}'+"\n"
     desc += ',["[' ']","label"],[" ","space"]' + "\n"
+    first_word_id = ""
+    second_word_id = ""
+    unitword_misc = ""
     for word in sentence.words:
+        if word.unitword:
+            first_word_id = word.id.split("-")[0]
+            second_word_id = str(int(first_word_id) + 1)
+            unitword_misc = word.misc
         if not word.unitword:
-            res = print_node(sentence, word)
+            res = print_node(sentence, word, first_word_id, second_word_id, unitword_misc)
             desc += res[0]
             output += res[1]
     desc += r',["\n","newline"]'
@@ -53,7 +60,7 @@ def _esc(string):
 
 
 
-def print_node(sentence, word):
+def print_node(sentence, word, first_word_id, second_word_id, unitword_misc):
     """JSON representation of a given node."""
     output = ""
     # pylint does not understand `.format(**locals())` and falsely alarms for unused vars
@@ -106,7 +113,7 @@ def print_node(sentence, word):
             '"labels":["{form}","#{{#bb0000}}{upos}","#{{#0000bb}}{deprel}"],'
             '"hint":"lemma={lemma}\\n{multiline_feats}"}}'.format(**locals()))+"\n"
     desc = ',["{form}",{id_node}]'.format(**locals())
-    desc += ',[" ","space"]' if 'SpaceAfter=No' not in misc else ''
+    desc += ',[" ","space"]' if ('SpaceAfter=No' not in misc) and ((word.id != first_word_id) and ((word.id != second_word_id) or ((word.id == second_word_id) and (unitword_misc != 'SpaceAfter=No')))) else ''
     # pylint: enable=too-many-locals,unused-variable
     return (desc, output)
 
