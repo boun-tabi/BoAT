@@ -392,8 +392,8 @@ class QDataViewer(QWidget):
                     word.head = str(int(word.head)+1)
 
 
-            w1 = Word("\t".join([str(limit), base_word.form, base_word.lemma, base_word.upos, base_word.xpos, base_word.feats, base_word.head, base_word.deprel, base_word.deps, base_word.misc]), self.sentence.sent_address)
-            w2 = Word("\t".join([str(limit+1), base_word.form, base_word.lemma, base_word.upos, base_word.xpos, base_word.feats, str(limit), base_word.deprel, base_word.deps, base_word.misc]), self.sentence.sent_address)
+            w1 = Word("\t".join([str(limit), base_word.form, base_word.lemma, base_word.upos, base_word.xpos, base_word.feats, base_word.head, base_word.deprel, base_word.deps, "_"]), self.sentence.sent_address)
+            w2 = Word("\t".join([str(limit+1), base_word.form, base_word.lemma, base_word.upos, base_word.xpos, base_word.feats, str(limit), base_word.deprel, base_word.deps, "_"]), self.sentence.sent_address)
             self.sentence.words = self.sentence.words[:x+1]+[w1, w2]+self.sentence.words[x+1:]
             base_word.id = str(limit)+"-"+str(limit+1)
             base_word.lemma = "_"
@@ -403,7 +403,6 @@ class QDataViewer(QWidget):
             base_word.head = "_"
             base_word.deprel = "_"
             base_word.deps = "_"
-            base_word.misc = "_"
             base_word.unitword = True
             self.first_time = True
             self.update_table()
