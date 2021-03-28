@@ -1,7 +1,7 @@
 import sys
 from PySide2 import QtCore, QtGui
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEngineSettings
-from PySide2.QtWidgets import QWidget, QApplication, QVBoxLayout, QLabel, QPushButton, QFileDialog, QTableWidget, QTableWidgetItem, QHBoxLayout, QTextEdit, QHeaderView, QCheckBox, QWidgetItem, QShortcut
+from PySide2.QtWidgets import QWidget, QApplication, QVBoxLayout, QLabel, QPushButton, QFileDialog, QTableWidget, QTableWidgetItem, QHBoxLayout, QTextEdit, QHeaderView, QCheckBox, QWidgetItem, QShortcut, QSplitter
 from PySide2.QtCore import Slot, Qt
 from helper import process_document
 import queue
@@ -211,26 +211,30 @@ class QDataViewer(QWidget):
         self.connect(self.addRowButton, QtCore.SIGNAL('clicked()'), self.add_row)
         self.connect(self.deleteRowButton, QtCore.SIGNAL('clicked()'), self.delete_row)
 
-        #create table here
+        # create table here
         self.tableWidget = QTableWidget(self)
         self.update_table()
         self.tableWidget.itemChanged.connect(self.handle_change)
-        self.vBoxLayout.addWidget(self.tableWidget)
 
         self.connect(self.tableWidget.verticalHeader(), QtCore.SIGNAL("sectionClicked(int)"), self.agg)
 
         self.qTextEditError = QTextEdit()
-        self.qTextEditError.setFixedHeight(40)
-        self.qTextEditError.setFixedWidth(1115)
         self.qTextEditError.setReadOnly(True)
-        self.vBoxLayout.addWidget(self.qTextEditError)
 
-        
+        self.splitter = QSplitter(Qt.Vertical)
+        self.splitter.addWidget(self.tableWidget)
+        self.splitter.addWidget(self.qTextEditError)
+        self.vBoxLayout.addWidget(self.splitter)
+
         self.webView = QWebEngineView()
 
         self.update_html()
         self.check_errors()
-        self.vBoxLayout.addWidget(self.webView)
+
+        self.splitter2 = QSplitter(Qt.Vertical)
+        self.splitter2.addWidget(self.splitter)
+        self.splitter2.addWidget(self.webView)
+        self.vBoxLayout.addWidget(self.splitter2)
 
         self.webView.loadFinished.connect(self.finito)
 
