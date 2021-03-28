@@ -135,6 +135,7 @@ class QDataViewer(QWidget):
         self.shortcutText.activated.connect(self.qTextEdit2.setFocus)
 
         self.goButton = QPushButton("Go", self)
+        self.goButton.setShortcut("Alt+G")
         self.nextButton = QPushButton("Next", self)
         self.nextButton.setShortcut("Alt+P")
         self.addRowButton = QPushButton("Add Row", self)
