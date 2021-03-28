@@ -28,8 +28,8 @@ class QDataViewer(QWidget):
         self.load_finished = True
         self.first_time = True
         self.map_col = {0:"ID", 1:"FORM", 2:"LEMMA", 3:"UPOS", 4:"XPOS", 5:"FEATS", 6:"HEAD", 7:"DEPREL", 8:"DEPS", 9:"MISC", 10:"Abbr", 11:"Animacy", 12:"Aspect", 13:"Case",
-                        14:"Clusivity", 15:"Definite", 16:"Degree", 17:"Echo", 18:"Evident", 19:"Foreign", 20:"Gender", 21:"Mood", 22:"NounClass", 23:"NumType", 24:"Number",
-                        25:"Number[psor]", 26:"Person", 27:"Person[psor]", 28:"Polarity", 29:"Polite", 30:"Poss", 31:"PronType", 32:"Reflex", 33:"Register", 34:"Tense", 35:"VerbForm",
+                        14:"Clusivity", 15:"Definite", 16:"Degree", 17:"Echo", 18:"Evident", 19:"Foreign", 20:"Gender", 21:"Mood", 22:"NounClass", 23:"Number", 24:"Number[psor]",
+                        25:"NumType", 26:"Person", 27:"Person[psor]", 28:"Polarity", 29:"Polite", 30:"Poss", 31:"PronType", 32:"Reflex", 33:"Register", 34:"Tense", 35:"VerbForm",
                         36:"Voice"}
 
         self.doc = None
@@ -161,8 +161,8 @@ class QDataViewer(QWidget):
         self.chBoxLayout = QHBoxLayout()
         self.chBoxLayout.addStretch()
         cb_ids = ["ID", "FORM", "LEMMA", "UPOS", "XPOS", "FEATS", "HEAD", "DEPREL", "DEPS", "MISC"]
-        cb_ids2 = ["Abbr", "Animacy", "Aspect", "Case", "Clusivity", "Definite", "Degree", "Echo", "Evident", "Foreign", "Gender", "Mood", "NounClass", "NumType"]
-        cb_ids3 = ["Number", "Number[psor]", "Person", "Person[psor]", "Polarity", "Polite", "Poss", "PronType", "Reflex", "Register", "Tense", "VerbForm", "Voice"]
+        cb_ids2 = ["Abbr", "Animacy", "Aspect", "Case", "Clusivity", "Definite", "Degree", "Echo", "Evident", "Foreign", "Gender", "Mood", "NounClass", "Number"]
+        cb_ids3 = ["Number[psor]", "NumType", "Person", "Person[psor]", "Polarity", "Polite", "Poss", "PronType", "Reflex", "Register", "Tense", "VerbForm", "Voice"]
         for cb_id in cb_ids:
             cb = QCheckBox(cb_id)
             cb.setChecked(True)
@@ -570,7 +570,7 @@ class QDataViewer(QWidget):
                     match_val=""
                     for sorted_feat in sorted_feats:
                             sf = re.split('\=', sorted_feat)
-                            if sf[0]<col:
+                            if sf[0].lower()<col.lower():
                                 match_col = sf[0]
                                 match_val = sf[1]
                     if match_col=="":
