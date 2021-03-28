@@ -541,7 +541,7 @@ class QDataViewer(QWidget):
         elif col=="LEMMA":
             self.sentence.words[row].lemma = text
         elif col=="UPOS":
-            self.sentence.words[row].upos = text
+            self.sentence.words[row].upos = text.upper()
         elif col=="XPOS":
             self.sentence.words[row].xpos = text
         elif col=="FEATS":
