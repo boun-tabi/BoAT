@@ -530,12 +530,14 @@ class QDataViewer(QWidget):
                 
 
     def handle_change(self, item):
-
+        col = self.map_col[item.column()]
         text = item.text()
         #print(text)
+        isSpace = False
         if text == "":
+            if col!="ID" and col!="FORM" and col!="LEMMA" and col!="UPOS" and col!="XPOS" and col!="HEAD" and col!="DEPREL" and col!="DEPS" and col!="MISC":
+                isSpace = True
             text = "_"
-        col = self.map_col[item.column()]
         row = item.row()
         self.sentence = self.doc.sentences[self.sentence_id]
         
@@ -565,27 +567,35 @@ class QDataViewer(QWidget):
                 cur_col = "Number\[psor\]"
             if col=="Person[psor]":
                 cur_col = "Person\[psor\]"
-            if (re.search(cur_col+'=\w*', self.sentence.words[row].feats) is None) and (text!="_"):
-                if self.sentence.words[row].feats=="_":
-                    self.sentence.words[row].feats = col+"="+text
-                else:
-                    sorted_feats = re.split('\|', self.sentence.words[row].feats)
-                    match_col=""
-                    match_val=""
-                    for sorted_feat in sorted_feats:
-                            sf = re.split('\=', sorted_feat)
-                            if sf[0].lower()<col.lower():
-                                match_col = sf[0]
-                                match_val = sf[1]
-                    if match_col=="":
-                        self.sentence.words[row].feats = col+"="+text+"|"+self.sentence.words[row].feats
+            if re.search(cur_col+'=\w*', self.sentence.words[row].feats) is None:
+                if text!="_":
+                    if self.sentence.words[row].feats=="_":
+                        self.sentence.words[row].feats = col+"="+text
                     else:
-                        cur_match_col=match_col
-                        if match_col == "Number[psor]":
-                            cur_match_col = "Number\[psor\]"
-                        if match_col == "Person[psor]":
-                            cur_match_col = "Person\[psor\]"
-                        self.sentence.words[row].feats = re.sub(cur_match_col+'='+match_val, match_col+'='+match_val+"|"+col+"="+text, self.sentence.words[row].feats)
+                        sorted_feats = re.split('\|', self.sentence.words[row].feats)
+                        match_col=""
+                        match_val=""
+                        for sorted_feat in sorted_feats:
+                                sf = re.split('\=', sorted_feat)
+                                if sf[0].lower()<col.lower():
+                                    match_col = sf[0]
+                                    match_val = sf[1]
+                        if match_col=="":
+                            self.sentence.words[row].feats = col+"="+text+"|"+self.sentence.words[row].feats
+                        else:
+                            cur_match_col=match_col
+                            if match_col == "Number[psor]":
+                                cur_match_col = "Number\[psor\]"
+                            if match_col == "Person[psor]":
+                                cur_match_col = "Person\[psor\]"
+                            self.sentence.words[row].feats = re.sub(cur_match_col+'='+match_val, match_col+'='+match_val+"|"+col+"="+text, self.sentence.words[row].feats)
+            elif isSpace:
+                old_feats = re.split('\|', self.sentence.words[row].feats)
+                new_feats = []
+                for old_feat in old_feats:
+                    if old_feat.split("=")[0]!=cur_col:
+                        new_feats.append(old_feat)
+                self.sentence.words[row].feats =  "|".join(new_feats)
             else:
                 self.sentence.words[row].feats = re.sub(cur_col+'=\w*', col+"="+text, self.sentence.words[row].feats)
 
