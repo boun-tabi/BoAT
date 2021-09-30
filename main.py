@@ -27,6 +27,7 @@ class QDataViewer(QWidget):
         self.current_dict = {}
         self.load_finished = True
         self.first_time = True
+        self.session_start = True
         self.map_col = {0:"ID", 1:"FORM", 2:"LEMMA", 3:"UPOS", 4:"XPOS", 5:"FEATS", 6:"HEAD", 7:"DEPREL", 8:"DEPS", 9:"MISC", 10:"Abbr", 11:"Animacy", 12:"Aspect", 13:"Case",
                         14:"Clusivity", 15:"Definite", 16:"Degree", 17:"Echo", 18:"Evident", 19:"Foreign", 20:"Gender", 21:"Mood", 22:"NounClass", 23:"Number", 24:"Number[psor]",
                         25:"NumType", 26:"Person", 27:"Person[psor]", 28:"Polarity", 29:"Polite", 30:"Poss", 31:"PronType", 32:"Reflex", 33:"Register", 34:"Tense", 35:"VerbForm",
@@ -72,6 +73,7 @@ class QDataViewer(QWidget):
         if self.sentence_id>0:
             self.sentence_id-=1   
         self.update_table()
+        self.session_start = True
         self.update_html()
         self.check_errors()
 
@@ -85,6 +87,7 @@ class QDataViewer(QWidget):
         if self.sentence_id<len(self.doc.sentences)-1:
             self.sentence_id+=1
         self.update_table()
+        self.session_start = True
         self.update_html()
         self.check_errors()
 
@@ -99,6 +102,7 @@ class QDataViewer(QWidget):
         try:
             self.sentence_id = int(self.qTextEdit.toPlainText())
             self.update_table()
+            self.session_start = True
             self.update_html()
             self.check_errors()
         except Exception as e:
@@ -108,10 +112,27 @@ class QDataViewer(QWidget):
         self.first_time = False
 
 
+    def reset(self):
+        if not self.first_time:
+            self.first_time = True
+            self.sentence = copy.deepcopy(self.sentence_backup)
+            self.doc.sentences[self.sentence_id] = copy.deepcopy(self.sentence_backup)
+            self.session_start = True
+            self.doc.write()
+            self.update_table()
+            self.update_html()
+            self.check_errors()
+
+            self.first_time = False
+
+
     def construct(self):
         self.hBoxLayout = QHBoxLayout()
         self.prevButton = QPushButton("Prev", self)
         self.prevButton.setShortcut("Alt+O")
+
+        self.resetButton = QPushButton("Reset", self)
+        self.resetButton.setShortcut("Alt+R")
 
         self.qTextEditAddRow = QTextEdit()
         self.qTextEditAddRow.setFixedHeight(20)
@@ -139,6 +160,8 @@ class QDataViewer(QWidget):
         self.addRowButton = QPushButton("Add Row", self)
         self.deleteRowButton = QPushButton("Delete Row", self)
         self.hBoxLayout.addWidget(self.prevButton)
+        self.hBoxLayout.addStretch()
+        self.hBoxLayout.addWidget(self.resetButton)
         self.hBoxLayout.addStretch()
         self.hBoxLayout.addWidget(self.qTextEditAddRow)
         self.hBoxLayout.addWidget(self.addRowButton)
@@ -204,6 +227,7 @@ class QDataViewer(QWidget):
         noteFile.close()
 
         self.connect(self.prevButton, QtCore.SIGNAL('clicked()'), self.go_prev)
+        self.connect(self.resetButton, QtCore.SIGNAL('clicked()'), self.reset)
         self.connect(self.goButton, QtCore.SIGNAL('clicked()'), self.go)
         self.connect(self.nextButton, QtCore.SIGNAL('clicked()'), self.go_next)
         self.connect(self.addRowButton, QtCore.SIGNAL('clicked()'), self.add_row)
@@ -211,7 +235,7 @@ class QDataViewer(QWidget):
 
         # create table here
         self.tableWidget = QTableWidget(self)
-        self.update_table()
+
         self.tableWidget.itemChanged.connect(self.handle_change)
 
         self.connect(self.tableWidget.verticalHeader(), QtCore.SIGNAL("sectionClicked(int)"), self.agg)
@@ -226,6 +250,7 @@ class QDataViewer(QWidget):
 
         self.webView = QWebEngineView()
 
+        self.update_table()
         self.update_html()
         self.check_errors()
 
@@ -424,7 +449,7 @@ class QDataViewer(QWidget):
         self.tableWidget.setRowCount(len(self.sentence.words))
         self.tableWidget.setColumnCount(self.column_number)
         self.tableWidget.setHorizontalHeaderLabels(self.columns)
-        
+
         for enum, word in enumerate(self.sentence.words):
             if word.unitword:
                 self.tableWidget.setVerticalHeaderItem(enum, QTableWidgetItem("-"))
@@ -488,7 +513,10 @@ class QDataViewer(QWidget):
             self.webView.loadFinished.connect(self.finito)
 
         self.sentence = self.doc.sentences[self.sentence_id]
-        
+        if self.session_start:
+            self.sentence_backup = copy.deepcopy(self.doc.sentences[self.sentence_id])
+            self.session_start = False
+
         html = process_document(self.sentence)
         self.webView.setHtml(html)
         self.load_finished = False
