@@ -493,14 +493,18 @@ class QDataViewer(QWidget):
         self.tableWidget.resizeColumnsToContents()
 
     def check_errors(self):
+        index = ""
+        for w in self.sentence.words:
+            index += w.form + "(" + w.id + ") "
+        index += "\n"
         error_list = get_errors(self.sentence.get_raw(), self.sentence.sent_id, self.language)
         if len(error_list)>0:
             error_raw_string = 'ERRORS:\n'
             for error in error_list:
                 error_raw_string+=error+'\n'
-            self.qTextEditError.setText(error_raw_string)
+            self.qTextEditError.setText(index + error_raw_string)
         else:
-            self.qTextEditError.setText('')
+            self.qTextEditError.setText(index)
     def update_html(self):
         if not self.load_finished: #If the js function not loaded an image onto app it removes browser
             print("Load error!")
