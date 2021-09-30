@@ -66,7 +66,6 @@ class QDataViewer(QWidget):
             noteTxt.close()
 
     def go_prev(self):
-        self.doc.write()
         self.first_time = True
         self.writeNotes()
 
@@ -80,7 +79,6 @@ class QDataViewer(QWidget):
         self.first_time = False
     
     def go_next(self):
-        self.doc.write()
         self.first_time = True
         self.writeNotes()
 
