@@ -600,10 +600,15 @@ class QDataViewer(QWidget):
                 self.sentence.words[row].feats = re.sub(cur_col+'=\w*', col+"="+text, self.sentence.words[row].feats)
 
         if not self.first_time:
+            self.doc.write()
+            self.first_time = True
+            self.writeNotes()
+
+            self.update_table()
             self.update_html()
             self.check_errors()
 
-
+            self.first_time = False
 
    
 
