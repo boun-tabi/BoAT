@@ -481,12 +481,14 @@ class QDataViewer(QWidget):
     def update_html(self):
         if not self.load_finished: #If the js function not loaded an image onto app it removes browser
             print("Load error!")
-            self.vBoxLayout.removeWidget(self.webView)
+            self.splitter2.deleteLater()
             self.webView = QWebEngineView()
+            self.splitter2 = QSplitter(Qt.Vertical)
+            self.splitter2.addWidget(self.splitter)
+            self.splitter2.addWidget(self.webView)
+            self.vBoxLayout.addWidget(self.splitter2)
             self.webView.loadFinished.connect(self.finito)
-            self.vBoxLayout.addWidget(self.webView)
 
-    
         self.sentence = self.doc.sentences[self.sentence_id]
         
         html = process_document(self.sentence)
