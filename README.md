@@ -37,7 +37,7 @@ Using `requirements.txt`, run `pip3 install -r requirements.txt`.
 
 ### Implementation Notes
 
-Required resources for validation (`data/` folder and `validate.py`) are taken from [github.com/universaldependencies/tools](https://github.com/universaldependencies/tools). Some changes are made to the validation script.
+Required resources for validation (`data/` folder and `validate.py`) are taken from [github.com/universaldependencies/tools](https://github.com/universaldependencies/tools).
 
 ## How to run?
 
