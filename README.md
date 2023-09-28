@@ -58,6 +58,8 @@ Check the user manual.
 
 ## Citation
 If you make use of the tool, please cite the following paper:
+
+```bib
 @inproceedings{turk-etal-2019-turkish,
     title = "{T}urkish Treebanking: Unifying and Constructing Efforts",
     author = {T{\"u}rk, Utku  and
@@ -76,3 +78,4 @@ If you make use of the tool, please cite the following paper:
     doi = "10.18653/v1/W19-4019",
     pages = "166--177",
 }
+```
