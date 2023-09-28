@@ -1,63 +1,71 @@
 # BoAT
-BOUN Annotation Tool for Dependency Parsing
 
-This repository contains an implementation of the **BoAT** to annotate the CoNLL-U files (https://universaldependencies.org/format.html) easily for dependency parsing. It also visualizes the parse trees.
+Boğaziçi University Annotation Tool for Dependency Parsing
+
+This repository contains an implementation of **BoAT** to easily annotate CoNLL-U files (see https://universaldependencies.org/format.html) for dependency parsing. It also visualizes the parse trees.
 
 ## Implementation
 
 ### Requirements
-- Python 3.6.x
-- PySide2 5.13.1
-- regex 2019.06.19
 
-### Installation of Python 3.6.x
-To check your python3 version:
+- Python 3.6 or higher
+
+### Installation of Python
+
+To check your `python3` version:
+
 ```
 python3 —version
 ```
-To install Python 3.6.x:
-Mac OS X -> download from https://www.python.org/downloads/mac-osx/
-Linux -> sudo apt install python3.6
 
-### To work in the Virtual Environment (optional)
-Go to the directory of BoAT-master
-```
-python3 -m venv boat_venv
-source boat_venv/bin/activate
+To install Python 3.6:
+
+- On Mac OS X, download from [python.org/downloads/mac-osx](https://www.python.org/downloads/mac-osx/).
+- On Linux, run: `sudo apt install python3.6`.
+
+### To work with a virtual Python environment (optional)
+
+Go to the directory of BoAT-master and run the following:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
 ### Installation of the modules
-- Install them one by one:
-```
-pip3 install PySide2==5.13.1
-pip3 install regex==2019.06.19
-```
 
-- Or install using requirements.txt:
-```
+- Using requirements.txt:
+
+```bash
 pip3 install -r requirements.txt
 ```
 
 ### Implementation Notes
-Required resources for validation check(data folder and validate.py) is borrowed from https://github.com/universaldependencies/tools. Some changes are made to validate.py.
+
+Required resources for validation check (data folder and `validate.py`) are taken from [github.com/universaldependencies/tools](https://github.com/universaldependencies/tools). Some changes are made to the script `validate.py`.
 
 ## How to run?
-- Go to the directory of BoAT-master
-- Run with:
-```
-python3 main.py
-```
 
-To use this tool for a specific language, giving the language as an argument will check your sentences through validation code of https://github.com/universaldependencies/tools. For example:
-```
-python3 main.py tr
+- Go to the directory of BoAT-master
+- Run with: `python3 main.py`
+
+To use this tool for a specific language, giving the language as an argument will check your sentences through validation code. For example:
+
+```bash
+python3 main.py -lang tr
 ```
 
 ## How to use?
+
 Check the user manual.
 
 ## Citation
-If you make use of the tool, please cite the following paper:
+
+If you make use of the tool, please cite the following papers:
+
+```bib
+to be added
+```
 
 ```bib
 @inproceedings{turk-etal-2019-turkish,
