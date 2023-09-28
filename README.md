@@ -2,7 +2,7 @@
 
 Boğaziçi University Annotation Tool for Dependency Parsing
 
-This repository contains an implementation of **BoAT** to easily annotate CoNLL-U files (see https://universaldependencies.org/format.html) for dependency parsing. It also visualizes the parse trees.
+This repository contains an implementation of **BoAT** to easily annotate [CoNLL-U files](https://universaldependencies.org/format.html) for dependency parsing. It also visualizes the parse trees.
 
 ## Implementation
 
@@ -12,11 +12,7 @@ This repository contains an implementation of **BoAT** to easily annotate CoNLL-
 
 ### Installation of Python
 
-To check your `python3` version:
-
-```
-python3 —version
-```
+To check your `python3` version: `python3 --version`
 
 To install Python 3.6:
 
@@ -42,29 +38,41 @@ pip3 install -r requirements.txt
 
 ### Implementation Notes
 
-Required resources for validation check (data folder and `validate.py`) are taken from [github.com/universaldependencies/tools](https://github.com/universaldependencies/tools). Some changes are made to the script `validate.py`.
+Required resources for validation (`data/` folder and `validate.py`) are taken from [github.com/universaldependencies/tools](https://github.com/universaldependencies/tools). Some changes are made to the validation script.
 
 ## How to run?
 
 - Go to the directory of BoAT-master
 - Run with: `python3 main.py`
 
-To use this tool for a specific language, giving the language as an argument will check your sentences through validation code. For example:
+To use this tool for a specific language, giving the language as an argument (`-l`) will check your sentences through [UD's validation](https://github.com/universaldependencies/tools#ud-tools). For example:
 
 ```bash
-python3 main.py -lang tr
+python3 main.py -l tr
+```
+
+You can give the `conllu` file directly by using the `-f` argument. For example:
+
+```bash
+python3 main.py -f example.conllu
 ```
 
 ## How to use?
 
-Check the user manual.
+Check the [user manual](https://github.com/boun-tabi/BoAT/blob/master/User%20Manual.pdf).
 
 ## Citation
 
 If you make use of the tool, please cite the following papers:
 
 ```bib
-to be added
+@inproceedings{enhance-altnlp,
+  author = {Marşan, Büşra and Furkan Akkurt, Salih and Şen, Muhammet and Gürbüz, Merve and Güngör, Onur and Betül Özateş, Şaziye and Üsküdarlı, Suzan and Özgür, Arzucan and Güngör, Tunga and Öztürk, Balkız},
+  title = {{Enhancements to the BOUN Treebank Reflecting the Agglutinative Nature of Turkish}},
+  booktitle = {Proceedings of The International Conference and Workshop on Agglutinative Language Technologies as a challenge of Natural Language Processing (ALTNLP)},
+  year = {2022},
+  month = jun,
+}
 ```
 
 ```bib

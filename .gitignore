@@ -1,5 +1,4 @@
 __pycache__/
-*.conllu
 .DS_Store
 .venv/
 notes-*.txt
