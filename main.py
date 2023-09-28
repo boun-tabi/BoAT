@@ -26,16 +26,15 @@ class QDataViewer(QWidget):
         self.shortcutExit = QShortcut(QKeySequence('Ctrl+Q'), self)
         self.shortcutExit.activated.connect(self.closeEvent)
 
-        opt_parser = argparse.ArgumentParser(description="BoAT Args")
-        group = opt_parser.add_argument_group("Lang & File")
-        group.add_argument('-lang', dest="lang", action="store", default="ud", help='Language to use BoAT with to annotate')
-        group.add_argument('-file', dest="file", action="store", default='', help='File to use BoAT with to annotate')
-        args = opt_parser.parse_args()
+        parser = argparse.ArgumentParser(description="BoAT Args")
+        parser.add_argument('-l', '--lang', dest="lang", action="store", default="ud", help='Language to use BoAT with to annotate')
+        parser.add_argument('-f', '--file', dest="file", action="store", default='', help='File to use BoAT with to annotate')
+        args = parser.parse_args()
 
         self.vBoxLayout = QVBoxLayout()
         self.setLayout(self.vBoxLayout)
 
-        self.setWindowTitle('BoAT, Annotation Tool')
+        self.setWindowTitle('Boğaziçi University Annotation Tool')
         DIP_logo = QIcon()
         DIP_logo.addFile(os.path.join(THISDIR, 'DIP_logo.png'))
         self.setWindowIcon(DIP_logo)
