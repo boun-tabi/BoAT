@@ -9,15 +9,18 @@ This repository contains an implementation of **BoAT** to easily annotate [CoNLL
 ### Requirements
 
 - Python 3.6 or higher
+- [PySide6](https://pypi.org/project/PySide6/)
+- [regex](https://pypi.org/project/regex/)
+- [spaCy](https://pypi.org/project/spacy/)
 
 ### Installation of Python
 
-To check your `python3` version: `python3 --version`
+To check your `python3` version, run `python3 --version`.
 
 To install Python 3.6:
 
 - On Mac OS X, download from [python.org/downloads/mac-osx](https://www.python.org/downloads/mac-osx/).
-- On Linux, run: `sudo apt install python3.6`.
+- On Linux, run `sudo apt install python3.6`.
 
 ### To work with a virtual Python environment (optional)
 
@@ -30,11 +33,7 @@ source .venv/bin/activate
 
 ### Installation of the modules
 
-- Using requirements.txt:
-
-```bash
-pip3 install -r requirements.txt
-```
+Using `requirements.txt`, run `pip3 install -r requirements.txt`.
 
 ### Implementation Notes
 
