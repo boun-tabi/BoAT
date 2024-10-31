@@ -75,6 +75,18 @@ If you make use of the tool, please cite the following papers:
 ```
 
 ```bib
+@article{turk2021resources,
+  title={Resources for Turkish dependency parsing: Introducing the BOUN treebank and the BoAT annotation tool},
+  author={T{\"u}rk, Utku and Atmaca, Furkan and {\"O}zate{\c{s}}, {\c{S}}aziye Bet{\"u}l and Berk, G{\"o}zde and Bedir, Seyyit Talha and K{\"o}ksal, Abdullatif and Ba{\c{s}}aran, Balk{\i}z {\"O}zt{\"u}rk and G{\"u}ng{\"o}r, Tunga and {\"O}zg{\"u}r, Arzucan},
+  journal={Language Resources and Evaluation},
+  pages={1--49},
+  year={2021},
+  publisher={Springer}
+}
+```
+
+
+```bib
 @inproceedings{turk-etal-2019-turkish,
     title = "{T}urkish Treebanking: Unifying and Constructing Efforts",
     author = {T{\"u}rk, Utku  and
